@@ -1,3 +1,1 @@
-{
-  "id"
-}
+{"id_h":1,"id":0,"name":"Wilczak","annualRevenues":null,"numbeeerOfStars":0,"whenbuild":null,"facilities":[{"id_f":1,"id":0,"name":"SwimmingPool","hotels":[1]},{"id_f":2,"id":0,"name":"FreeParking","hotels":[1]}],"rooms":[{"id":0,"singleRoom":300,"doubleRoom":400,"tripleRoom":450,"apartment":1000,"hotelsList":[1]}],"countries":{"id_countr":1,"id":0,"name":"Poland","population":0,"language":null},"cities":{"id_c":1,"id":0,"name":"Lublin","population":0},"address":{"id_a":1,"id":0,"name":"ul. Wil 2"},"facilitiesList":[],"allhotelsList":[1]}

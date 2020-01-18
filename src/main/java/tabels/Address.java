@@ -1,6 +1,12 @@
 package tabels;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class,
+        property="id_a", scope=Address.class)
 
 @Entity
 @Table(name = "ADDRESS", uniqueConstraints = {
@@ -14,18 +20,6 @@ public class Address {
 
     @Column(name = "name")
     private String name;
-
-    public Hotels getHotels2() {
-        return hotels2;
-    }
-
-    public void setHotels2(Hotels hotels2) {
-        this.hotels2 = hotels2;
-    }
-
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY, optional = false)
-    private Hotels hotels2;
 
     public Address() {}
 

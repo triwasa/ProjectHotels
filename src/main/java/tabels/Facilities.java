@@ -1,8 +1,14 @@
 package tabels;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class,
+        property="id_f", scope=Facilities.class)
 
 @Entity
 @Table(name = "FACILITIES", uniqueConstraints = {

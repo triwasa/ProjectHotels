@@ -1,8 +1,14 @@
 package tabels;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Fetch;
 
+
 import javax.persistence.*;
+
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class,
+        property="id_countr", scope=Countries.class)
 
 @Entity
 @Table(name = "COUNTRIES", uniqueConstraints = {
@@ -22,18 +28,6 @@ public class Countries {
 
     @Column(name = "language")
     private String language;
-
-    public Hotels getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotels hotel) {
-        this.hotel = hotel;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_countries")
-    private Hotels hotel;
 
     public Countries() {}
 

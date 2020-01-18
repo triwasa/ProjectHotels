@@ -2,11 +2,16 @@ package tabels;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class,
+        property="id_h", scope=Hotels.class)
 
 @Entity
 @Table(name = "HOTELS", uniqueConstraints = {
@@ -18,50 +23,11 @@ public class Hotels {
     @Column(name = "id")
     private int id;
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Countries getCountries() {
-        return countries;
-    }
-
-    public void setCountries(Countries countries) {
-        this.countries = countries;
-    }
-
-    public Cities getCities() {
-        return cities;
-    }
-
-    public void setCities(Cities cities) {
-        this.cities = cities;
-    }
-
     @Column(name = "name")
     private String name;
 
     @Column(name = "annual_revenues")
     private String annualRevenues;
-
-    @Column(name = "swimming_pool")
-    private boolean swimmingPool;
-
-    @Column(name = "single_room")
-    private int singleRoom;
-
-    @Column(name = "double_room")
-    private int doubleRoom;
-
-    @Column(name = "triple_room")
-    private int tripleRoom;
-
-    @Column(name = "apartment")
-    private int apartment;
 
     @Column(name = "number_od_stars")
     private int numbeeerOfStars;
@@ -73,19 +39,25 @@ public class Hotels {
     @ManyToMany(mappedBy = "hotels", cascade = CascadeType.ALL)
     private List<Facilities> facilities= new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_address")
-    private Address address;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<TypeAndPriceRooms> rooms = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "countries_id", referencedColumnName = "id", nullable = false)
+    Countries countries;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "cities_id", referencedColumnName = "id", nullable = false)
+    Cities cities;
 
-    @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    private Countries countries;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "=address_id", referencedColumnName = "id", nullable = false)
+    Address address;
 
-    @OneToOne(mappedBy = "hotels", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
-    private Cities cities;
+    @ManyToMany(mappedBy = "hotels", cascade = CascadeType.ALL)
+    private List<Facilities> facilitiesList = new ArrayList<>();
+
+    private List<Hotels> allhotelsList = new ArrayList<>();
 
     public Hotels() {}
 
@@ -113,46 +85,6 @@ public class Hotels {
         this.annualRevenues = annualRevenues;
     }
 
-    public boolean isSwimmingPool() {
-        return swimmingPool;
-    }
-
-    public void setSwimmingPool(boolean swimmingPool) {
-        this.swimmingPool = swimmingPool;
-    }
-
-    public int getSingleRoom() {
-        return singleRoom;
-    }
-
-    public void setSingleRoom(int singleRoom) {
-        this.singleRoom = singleRoom;
-    }
-
-    public int getDoubleRoom() {
-        return doubleRoom;
-    }
-
-    public void setDoubleRoom(int doubleRoom) {
-        this.doubleRoom = doubleRoom;
-    }
-
-    public int getTripleRoom() {
-        return tripleRoom;
-    }
-
-    public void setTripleRoom(int tripleRoom) {
-        this.tripleRoom = tripleRoom;
-    }
-
-    public int getApartment() {
-        return apartment;
-    }
-
-    public void setApartment(int apartment) {
-        this.apartment = apartment;
-    }
-
     public int getNumbeeerOfStars() {
         return numbeeerOfStars;
     }
@@ -177,13 +109,51 @@ public class Hotels {
         this.facilities = facilities;
     }
 
-    public Address getAdress() {
+    public Countries getCountries() {
+        return countries;
+    }
+
+    public void setCountries(Countries countries) {
+        this.countries = countries;
+    }
+
+    public Cities getCities() {
+        return cities;
+    }
+
+    public void setCities(Cities cities) {
+        this.cities = cities;
+    }
+
+    public Address getAddress() {
         return address;
     }
 
-    public void setAdress(Address adress) {
-        this.address = adress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
+    public List<Facilities> getFacilitiesList() {
+        return facilitiesList;
+    }
 
+    public void setFacilitiesList(List<Facilities> facilitiesList) {
+        this.facilitiesList = facilitiesList;
+    }
+
+    public List<TypeAndPriceRooms> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<TypeAndPriceRooms> rooms) {
+        this.rooms = rooms;
+    }
+
+    public List<Hotels> getAllhotelsList() {
+        return allhotelsList;
+    }
+
+    public void setAllhotelsList(List<Hotels> allhotelsList) {
+        this.allhotelsList = allhotelsList;
+    }
 }
